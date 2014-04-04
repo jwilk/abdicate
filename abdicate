@@ -29,8 +29,12 @@ import urllib
 import requests
 import urllib3
 
-recaptcha_noscript_re = re.compile(
-    re.escape('http://www.google.com/recaptcha/api/noscript?k=') + '[0-9A-Za-z_-]+'
+recaptcha_script_re = re.compile(
+    re.escape('http://www.google.com/recaptcha/api/challenge?k=') + '([0-9A-Za-z_-]+)'
+)
+
+recaptcha_noscript_prefix = (
+    'http://www.google.com/recaptcha/api/noscript?k='
 )
 
 recaptcha_image_re = re.compile(
@@ -52,10 +56,10 @@ def main():
     base_url = 'http://bdi.free.aero2.net.pl:8080/'
     while True:
         response = session.post(base_url, data=dict(viewForm='true'))
-        match = recaptcha_noscript_re.search(response.text)
+        match = recaptcha_script_re.search(response.text)
         if match is None:
             raise ScrapingError
-        url = match.group(0)
+        url = recaptcha_noscript_prefix + match.group(1)
         response = session.get(url)
         match = recaptcha_image_re.search(response.text)
         if match is None:
