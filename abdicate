@@ -26,6 +26,11 @@ import subprocess as ipc
 import tempfile
 import urllib
 
+try:
+    import readline
+except ImportError:
+    pass
+
 import requests
 import urllib3
 
