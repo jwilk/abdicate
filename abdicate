@@ -70,7 +70,7 @@ def main():
         if match is None:
             raise ScrapingError
         url = urllib.parse.urljoin(url, match.group(0))
-        challange = match.group(1)
+        challenge = match.group(1)
         response = session.get(url)
         with tempfile.NamedTemporaryFile(prefix='aero2.', suffix='.jpeg') as img:
             img.write(response.content)
@@ -82,7 +82,7 @@ def main():
         captcha = input('captcha: ')
         response = session.post(base_url, data=dict(
             viewForm=True,
-            recaptcha_challenge_field=challange,
+            recaptcha_challenge_field=challenge,
             recaptcha_response_field=captcha,
         ))
         if b'Zrestartuj' in response.content:
