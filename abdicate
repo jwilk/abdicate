@@ -118,8 +118,8 @@ def main():
             img.write(response.content)
             img.flush()
             show_image(img.name, options=options)
-        captcha = input('captcha: ')
-        captcha = ' '.join(captcha.split())
+            captcha = input('captcha: ')
+            captcha = ' '.join(captcha.split())
         if not captcha:
             continue
         response = session.post(base_url, data=dict(
