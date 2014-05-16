@@ -21,9 +21,14 @@
 # SOFTWARE.
 
 import argparse
+import fcntl
+import os
 import re
+import struct
 import subprocess as ipc
+import sys
 import tempfile
+import termios
 import urllib
 
 try:
@@ -31,23 +36,66 @@ try:
 except ImportError:
     pass
 
+try:
+    import aalib
+    from PIL import Image, ImageOps
+except ImportError:
+    aalib = None
+
 import requests
 import urllib3
 
-recaptcha_script_re = re.compile(
-    re.escape('http://www.google.com/recaptcha/api/challenge?k=') + '([0-9A-Za-z_-]+)'
-)
-
-recaptcha_noscript_prefix = (
-    'http://www.google.com/recaptcha/api/noscript?k='
-)
-
-recaptcha_image_re = re.compile(
-    'image[?]c=([0-9A-Za-z_-]+)'
+captcha_image_re = re.compile(
+    "<img src='([\w+.]+)' id='captcha'>"
 )
 
 class ScrapingError(RuntimeError):
     pass
+
+def show_image_see(path, *, options):
+    cmdline = ['see', path]
+    if options.debug:
+        cmdline[1:1] = ['--debug']
+    ipc.check_call(cmdline)
+
+def ioctl_GWINSZ(fp):
+    y, x = struct.unpack('hh', fcntl.ioctl(fp, termios.TIOCGWINSZ, '\0' * 4))
+    return x, y
+
+def get_terminal_size(fp):
+    try:
+        return ioctl_GWINSZ(fp.fileno())
+    except Exception:
+        pass
+    try:
+        return tuple(
+            int(os.getenv(x))
+            for x in ('COLUMNS', 'LINES')
+        )
+    except Exception:
+        return (80, 25)
+
+def show_image_aalib(path, *, options):
+    (twidth, theight) = get_terminal_size(sys.stdout);
+    if os.getenv('TERM') == 'linux':
+        screen = aalib.LinuxScreen
+    else:
+        screen = aalib.AnsiScreen
+    screen = screen(
+        width=twidth,
+        height=(theight - 4)
+    )
+    image = Image.open(path)
+    image = image.convert('L')
+    image = ImageOps.invert(image)
+    image = image.resize(screen.virtual_size)
+    screen.put_image((0, 0), image)
+    print(screen.render())
+
+if aalib:
+    show_image = show_image_aalib
+else:
+    show_image = show_image_see
 
 def main():
     ap = argparse.ArgumentParser()
@@ -61,34 +109,24 @@ def main():
     base_url = 'http://bdi.free.aero2.net.pl:8080/'
     while True:
         response = session.post(base_url, data=dict(viewForm='true'))
-        match = recaptcha_script_re.search(response.text)
+        match = captcha_image_re.search(response.text)
         if match is None:
             raise ScrapingError
-        url = recaptcha_noscript_prefix + match.group(1)
-        response = session.get(url)
-        match = recaptcha_image_re.search(response.text)
-        if match is None:
-            raise ScrapingError
-        url = urllib.parse.urljoin(url, match.group(0))
-        challenge = match.group(1)
+        url = urllib.parse.urljoin(base_url, match.group(1))
         response = session.get(url)
         with tempfile.NamedTemporaryFile(prefix='aero2.', suffix='.jpeg') as img:
             img.write(response.content)
             img.flush()
-            cmdline = ['see', img.name]
-            if options.debug:
-                cmdline[1:1] = ['--debug']
-            ipc.check_call(cmdline)
+            show_image(img.name, options=options)
         captcha = input('captcha: ')
         captcha = ' '.join(captcha.split())
         if not captcha:
             continue
         response = session.post(base_url, data=dict(
             viewForm=True,
-            recaptcha_challenge_field=challenge,
-            recaptcha_response_field=captcha,
+            captcha=captcha,
         ))
-        if b'Zrestartuj' in response.content:
+        if b'i ponownie' in response.content:
             break
 
 if __name__ == '__main__':
