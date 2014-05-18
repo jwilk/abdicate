@@ -88,6 +88,8 @@ def show_image_aalib(path, *, options):
     image = Image.open(path)
     image = image.convert('L')
     image = ImageOps.invert(image)
+    bbox = image.getbbox()
+    image = image.crop(bbox)
     image = image.resize(screen.virtual_size)
     screen.put_image((0, 0), image)
     print(screen.render())
