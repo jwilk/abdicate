@@ -45,6 +45,8 @@ except ImportError:
 import requests
 import urllib3
 
+success_string = b'i ponownie'
+
 captcha_image_re = re.compile(
     "<img src='([\w+.]+[?]PHPSESSID=(\w+))' id='captcha'>"
 )
@@ -111,6 +113,8 @@ def main():
     base_url = 'http://bdi.free.aero2.net.pl:8080/'
     while True:
         response = session.post(base_url, data=dict(viewForm='true'))
+        if success_string in response.content:
+            break
         match = captcha_image_re.search(response.text)
         if match is None:
             raise ScrapingError
@@ -130,7 +134,7 @@ def main():
             captcha=captcha,
             PHPSESSID=session_id,
         ))
-        if b'i ponownie' in response.content:
+        if success_string in response.content:
             break
 
 if __name__ == '__main__':
