@@ -46,7 +46,7 @@ import requests
 import urllib3
 
 captcha_image_re = re.compile(
-    "<img src='([\w+.]+)' id='captcha'>"
+    "<img src='([\w+.]+[?]PHPSESSID=(\w+))' id='captcha'>"
 )
 
 class ScrapingError(RuntimeError):
@@ -115,6 +115,7 @@ def main():
         if match is None:
             raise ScrapingError
         url = urllib.parse.urljoin(base_url, match.group(1))
+        session_id = match.group(2)
         response = session.get(url)
         with tempfile.NamedTemporaryFile(prefix='aero2.', suffix='.jpeg') as img:
             img.write(response.content)
@@ -127,6 +128,7 @@ def main():
         response = session.post(base_url, data=dict(
             viewForm=True,
             captcha=captcha,
+            PHPSESSID=session_id,
         ))
         if b'i ponownie' in response.content:
             break
