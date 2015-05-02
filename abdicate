@@ -29,6 +29,7 @@ import subprocess as ipc
 import sys
 import tempfile
 import termios
+import time
 import urllib
 
 try:
@@ -45,7 +46,7 @@ except ImportError:
 import requests
 import urllib3
 
-success_string = b'i ponownie'
+wait_re = re.compile('Za ([0-9]+) sekund')
 
 captcha_image_re = re.compile(
     "<img src='([\w+.]+[?]PHPSESSID=(\w+))' id='captcha'>"
@@ -101,6 +102,20 @@ if aalib:
 else:
     show_image = show_image_see
 
+def wait(response):
+    match = wait_re.search(response.text)
+    if match is None:
+        return
+    timeout = int(match.group(1))
+    print('waiting', end='')
+    sys.stdout.flush()
+    for i in range(timeout):
+        time.sleep(1)
+        print('.', end='')
+        sys.stdout.flush()
+    print()
+    return True
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--debug', action='store_true')
@@ -113,7 +128,7 @@ def main():
     base_url = 'http://bdi.free.aero2.net.pl:8080/'
     while True:
         response = session.post(base_url, data=dict(viewForm='true'))
-        if success_string in response.content:
+        if wait(response):
             break
         match = captcha_image_re.search(response.text)
         if match is None:
@@ -134,7 +149,7 @@ def main():
             captcha=captcha,
             PHPSESSID=session_id,
         ))
-        if success_string in response.content:
+        if wait(response):
             break
 
 if __name__ == '__main__':
