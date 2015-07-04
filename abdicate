@@ -144,11 +144,14 @@ def main():
             captcha = ' '.join(captcha.split())
         if not captcha:
             continue
-        response = session.post(base_url, data=dict(
-            viewForm=True,
-            captcha=captcha,
-            PHPSESSID=session_id,
-        ))
+        try:
+            response = session.post(base_url, data=dict(
+                viewForm=True,
+                captcha=captcha,
+                PHPSESSID=session_id,
+            ))
+        except requests.exceptions.ConnectionError:
+            continue
         if wait(response):
             break
 
