@@ -79,7 +79,7 @@ def get_terminal_size(fp):
         return (80, 25)
 
 def show_image_aalib(path, *, options):
-    (twidth, theight) = get_terminal_size(sys.stdout);
+    (twidth, theight) = get_terminal_size(sys.stdout)
     if os.getenv('TERM') == 'linux':
         screen = aalib.LinuxScreen
     else:
