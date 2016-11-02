@@ -124,7 +124,7 @@ def main():
         urllib3.add_stderr_logger()
     session = requests.Session()
     session.trust_env = False
-    session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0'
+    session.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 6.1; rv:45.0) Gecko/20100101 Firefox/45.0'
     base_url = 'http://bdi.free.aero2.net.pl:8080/'
     while True:
         response = session.post(base_url, data=dict(viewForm='true'))
