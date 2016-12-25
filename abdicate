@@ -49,7 +49,7 @@ import urllib3
 wait_re = re.compile(r'\bwaitAndRedirect[(]"[^"]+", ([0-9]+)[)]')
 
 captcha_image_re = re.compile(
-    "<img src='([\w+.]+[?]PHPSESSID=(\w+))' id='captcha'>"
+    r"<img src='([\w+.]+[?]PHPSESSID=(\w+))' id='captcha'>"
 )
 
 class ScrapingError(RuntimeError):
