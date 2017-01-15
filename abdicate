@@ -38,6 +38,8 @@ try:
     import readline
 except ImportError:
     pass
+else:
+    del readline
 
 try:
     import aalib
