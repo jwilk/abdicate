@@ -9,6 +9,50 @@ Users of this service are required to solve a captcha every hour.
 **abdicate** is a command-line client for the Aero2 BDI captcha,
 which lets you solve it without using a web browser.
 
+Example
+-------
+
+.. code:: console
+
+   $ abdicate
+
+
+
+          ]$QQQQ@`     .   .                                                                         .  .
+           jQQQW'  . .    .                                                                     .  .   ..
+          jQQQW(  .     qgc                                                                      .qwwwp,
+          dQQWM    .   jmQf                                                                     ayQD??W6..
+        .jQQQ[       qwmQW .                                                              .   .7T98`  ]Qg,   .
+        .mQQ@`      gyWWQE                                                       . . .  .    .        jQQp. .
+        jQQW'__gg,  4QQQQT9V[                                                    .qawaaaawaa,        jQQQQmmm`
+       jQQQFaWQQQm,.jQQQW'         _awwwwg, .                                  qw@V?4WWB!?9U`        mQQQQQQf .jmymmmp
+      jjQQQW!' )WQm,]QQQW      .._wQWWWD?HQa_                                _wQD`  jQWWc     _agp..jQQWQQWW[  -!$QQQf.
+      jmQW@'   jQQQ[]QQQD       _mWWW@~   "Vm,                              _yQQ`   jQQQk     -?9$mQQWP^QQQQ(   `jQQQ[
+      mQWQ(    jQWQmmQQQE       yQWQN`     -!'                              wQQF  . jWQQf. .  .. ."Qmp ]QQQW`    ]QQQf.
+     jQQQ@'   .mQQWQQQQQm,     qQQQF                       .     . .,gg__qgwWQQ(    jQQW[ .  .     dQm,]QQQW     ]QQQf
+     jQQQk   .vQQQf ]QQQWQQmw_.QQQWammw,  . gwaaaac ._ggwwQT.   qyQ@"?WQWF+QWQW`   _QQQP    .     .dQQk QQQW/    )QQQf
+     jQQQf    mWQW[ ]QQWQ-4$WQQQQQQW'"?$c   ^]QWWW'  3$QQWW    qQQf'  dQQmZQQQW=_qagQQQQQQQQgyyycg,mQQQrXQWQf..  ]QWQ[
+    .QQQQ[   _QQQQf jQQQQ/  !?9QQQWk   ]WL  .jQQQW    )QQQ#   jQQQ'  .dQQWnQQWQWQQQQWWVVVTVQQWQWQQQQQQQ(HQQQ[     QQWL
+    jQQQQf   jQQWQf.+QQQQc    +QQQQQgwppWQ[  )QQQE    ]QWQE   jQQB   .mQQQmQQQWQWQQU"`     4Qc  "?4QQWQmyWQWL   ._WWQh.
+   _jQQQWf   jQQQQ(  ]QWQmpg,  $QQWDQWQmQQQ, .QQQE    .QQQE  <QQQf__agQQWQWQQWp"?"~ ..      4Qg.. dQQQ@$WQQWm .  jWWQQ
+   9H9VVVQg-wWQQQQp  .-?HWQQm  )QQWr -"4QWQgaa$QQm     WWQm  ]WQQQQQQQQQQ[ ?WQgp.__gaga.  .. "9$mmQQQD'  ?VWQgapjWZQWQ,
+              "~?9$w            "QW[  ."QQQQWTWQQQWQQQQQQWQWQWWQQW^` ]QW^    "???!""?$QQQa             .  jWP?9QWWgQQQL   .
+                  -"          .  "Qk    QWWQm )QWQP??9VHWQQW""QWm$wawWD`      __.  . )WQWWp              jQE`. -!"9WWWmg,.
+                  .               "Wp.  $WQWW -QQWk    ]WQQQr.]QQr???"     _awmE      $WWQL .           .jQ#  .. . -QQWWQz
+                               .   -9$gqmQQQY .4QQW,   ]QQQWL  9QQp,__gag,:jWW@       dQQQk             .)WQ,       3QB^?H,
+                                     )?$QWW[-  ]4QQgagaWVQWQk   "4WQWBQWQQmJQQm    . jQQQH' .             4WL,  .   jQf
+                                        --`     .?QWQQQF WWWQ  .._--.  )WQQQBWWL,__gwWQ@!~ .               )Qm,,  .qmB'
+                                      .  ..   . yQD      ]QQQf+QQQY':   ]WQWk-7!??""`                         "?TVBY^
+                                               ]QQ[       QQW`.4QQ,:    jQQQE      .
+                                               .$Wk       4QB  ]$Qa,.  _yQQW'
+                                              . )$Qc, . . dQF   -YWQwawQW@?' .
+                                                 )4Qg,:_qwQT'   .  )"!!^`    .
+                                                   ""$QQWT'
+
+                                                     .
+
+   captcha:
+
 Prerequisites
 =============
 
