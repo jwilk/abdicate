@@ -60,11 +60,13 @@ Prerequisites
 
 * python-aalib_
 
-* Python Imaging Library (PIL_)
+* PIL_ or Pillow_
 
 .. _python-aalib:
    https://pypi.python.org/pypi/python-aalib
 .. _PIL:
    https://pypi.python.org/pypi/PIL
+.. _Pillow:
+   https://pypi.python.org/pypi/Pillow
 
 .. vim:ft=rst ts=3 sts=3 sw=3 et
