@@ -9,9 +9,7 @@ addons:
   apt:
     packages:
     - libaa1
-cache:
-  directories:
-  - $HOME/.cache
+cache: pip
 install:
 - pip install --upgrade pip
 - pip install python-aalib
