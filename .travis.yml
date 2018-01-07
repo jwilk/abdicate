@@ -15,11 +15,12 @@ cache: pip
 install:
 - pip install python-aalib
 - pip install pillow
-- pip install pyflakes
+- pip install pyflakes pydiatra
 - pip install docutils pygments
 script:
 - ./abdicate --help
 - python3 -m pyflakes abdicate
+- python3 -m pydiatra abdicate
 - private/check-rst
 
 # vim:ts=2 sts=2 sw=2 et
