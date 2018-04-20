@@ -63,10 +63,10 @@ Prerequisites
 * PIL_ or Pillow_
 
 .. _python-aalib:
-   https://pypi.python.org/pypi/python-aalib
+   https://pypi.org/project/python-aalib/
 .. _PIL:
-   https://pypi.python.org/pypi/PIL
+   https://pypi.org/project/PIL/
 .. _Pillow:
-   https://pypi.python.org/pypi/Pillow
+   https://pypi.org/project/Pillow/
 
 .. vim:ft=rst ts=3 sts=3 sw=3 et
