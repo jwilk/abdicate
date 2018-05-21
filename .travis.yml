@@ -12,10 +12,13 @@ addons:
     packages:
     - libaa1
 cache: pip
+before_install:
+- pyflakes=pyflakes
+- if [[ $TRAVIS_PYTHON_VERSION = 3.3 ]]; then pyflakes='pyflakes<2'; fi
 install:
 - pip install python-aalib
 - pip install pillow
-- pip install pyflakes pydiatra
+- pip install pydiatra $pyflakes
 - pip install docutils pygments
 script:
 - ./abdicate --help
