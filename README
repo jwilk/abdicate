@@ -60,12 +60,10 @@ Prerequisites
 
 * python-aalib_
 
-* PIL_ or Pillow_
+* Pillow_
 
 .. _python-aalib:
    https://pypi.org/project/python-aalib/
-.. _PIL:
-   https://pypi.org/project/PIL/
 .. _Pillow:
    https://pypi.org/project/Pillow/
 
