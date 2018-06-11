@@ -19,11 +19,11 @@ install:
 - pip install python-aalib
 - pip install pillow
 - pip install pydiatra $pyflakes
-- pip install docutils pygments
+- pip install restructuredtext-lint pygments
 script:
 - ./abdicate --help
 - python3 -m pyflakes abdicate
 - python3 -m pydiatra abdicate
-- private/check-rst
+- restructuredtext-lint --encoding=UTF-8 README
 
 # vim:ts=2 sts=2 sw=2 et
