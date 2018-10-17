@@ -151,7 +151,7 @@ class UserAgent(object):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--debug', action='store_true')
+    ap.add_argument('--debug', action='store_true', help='enable HTTP debugging')
     options = ap.parse_args()
     if options.debug:
         http.client.HTTPConnection.debuglevel = 1
