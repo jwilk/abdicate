@@ -152,6 +152,7 @@ class UserAgent(object):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--debug', action='store_true', help='enable HTTP debugging')
+    ap.add_argument('--copy-to', metavar='DIR', help='copy solved captchas to DIR')
     options = ap.parse_args()
     if options.debug:
         http.client.HTTPConnection.debuglevel = 1
@@ -165,9 +166,9 @@ def main():
             raise ScrapingError
         url = match.group(1)
         session_id = match.group(2)
-        response = ua.get(url)
+        img_response = ua.get(url)
         with tempfile.NamedTemporaryFile(prefix='aero2.', suffix='.jpeg') as img:
-            img.write(response)
+            img.write(img_response)
             img.flush()
             show_image(img.name, options=options)
             captcha = input('captcha: ')
@@ -181,6 +182,12 @@ def main():
         ))
         if wait(response):
             break
+    if options.copy_to:
+        if os.path.basename(captcha) != captcha:
+            raise RuntimeError
+        path = os.path.join(options.copy_to, captcha) + '.jpeg'
+        with open(path, 'wb') as img:
+            img.write(img_response)
 
 if __name__ == '__main__':
     main()
