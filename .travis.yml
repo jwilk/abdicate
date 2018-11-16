@@ -16,10 +16,10 @@ before_install:
 - pyflakes=pyflakes
 - if [[ $TRAVIS_PYTHON_VERSION = 3.3 ]]; then pyflakes='pyflakes<2'; fi
 install:
-- pip install python-aalib
-- pip install pillow
-- pip install pydiatra $pyflakes
-- pip install restructuredtext-lint pygments
+- python3 -m pip install python-aalib
+- python3 -m pip install pillow
+- python3 -m pip install pydiatra $pyflakes
+- python3 -m pip install restructuredtext-lint pygments
 script:
 - ./abdicate --help
 - python3 -m pyflakes abdicate
