@@ -12,11 +12,13 @@ addons:
     - libaa1
 cache: pip
 before_install:
+- pillow=pillow
+- if [[ $TRAVIS_PYTHON_VERSION = 3.3 ]]; then pillow+='<6'; fi
 - pyflakes=pyflakes
 - if [[ $TRAVIS_PYTHON_VERSION = 3.3 ]]; then pyflakes+='<2'; fi
 install:
 - python3 -m pip install python-aalib
-- python3 -m pip install pillow
+- python3 -m pip install $pillow
 - python3 -m pip install pydiatra $pyflakes
 - python3 -m pip install restructuredtext-lint pygments
 script:
