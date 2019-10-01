@@ -21,15 +21,13 @@
 # SOFTWARE.
 
 import argparse
-import fcntl
 import http.client
 import os
 import re
-import struct
+import shutil
 import subprocess as ipc
 import sys
 import tempfile
-import termios
 import time
 import urllib.parse
 import urllib.request
@@ -62,25 +60,8 @@ def show_image_see(path, *, options):
         cmdline[1:1] = ['--debug']
     ipc.check_call(cmdline)
 
-def ioctl_GWINSZ(fp):
-    y, x = struct.unpack('hh', fcntl.ioctl(fp, termios.TIOCGWINSZ, '\0' * 4))
-    return x, y
-
-def get_terminal_size(fp):
-    try:
-        return ioctl_GWINSZ(fp.fileno())
-    except Exception:
-        pass
-    try:
-        return tuple(
-            int(os.getenv(x))
-            for x in ('COLUMNS', 'LINES')
-        )
-    except Exception:
-        return (80, 25)
-
 def show_image_aalib(path, *, options):
-    (twidth, theight) = get_terminal_size(sys.stdout)
+    (twidth, theight) = shutil.get_terminal_size()
     if os.getenv('TERM') == 'linux':
         screen = aalib.LinuxScreen
     else:
