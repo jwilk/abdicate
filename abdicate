@@ -138,6 +138,7 @@ def main():
     if options.debug:
         http.client.HTTPConnection.debuglevel = 1
     ua = UserAgent(base_url='http://bdi.free.aero2.net.pl:8080/')
+    captcha = None
     while True:
         response = ua.post('/', data=dict(viewForm='true'))
         if wait(response):
@@ -163,7 +164,7 @@ def main():
         ))
         if wait(response):
             break
-    if options.copy_to:
+    if captcha and options.copy_to:
         if os.path.basename(captcha) != captcha:
             raise RuntimeError
         path = os.path.join(options.copy_to, captcha) + '.jpeg'
