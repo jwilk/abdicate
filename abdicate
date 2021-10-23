@@ -87,7 +87,7 @@ else:
 def wait(response):
     match = wait_re.search(response)
     if match is None:
-        return
+        return None
     timeout = int(match.group(1))
     print('waiting', end='')
     sys.stdout.flush()
