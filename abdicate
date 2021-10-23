@@ -91,7 +91,7 @@ def wait(response):
     timeout = int(match.group(1))
     print('waiting', end='')
     sys.stdout.flush()
-    for i in range(timeout):
+    for _i in range(timeout):
         time.sleep(1)
         print('.', end='')
         sys.stdout.flush()
