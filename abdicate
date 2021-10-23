@@ -60,7 +60,7 @@ def show_image_see(path, *, options):
         cmdline[1:1] = ['--debug']
     ipc.check_call(cmdline)
 
-def show_image_aalib(path, *, options):
+def show_image_aalib(path, *, options):  # pylint: disable=unused-argument
     (twidth, theight) = shutil.get_terminal_size()
     if os.getenv('TERM') == 'linux':
         screen = aalib.LinuxScreen
