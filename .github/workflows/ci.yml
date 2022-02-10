@@ -60,7 +60,8 @@ jobs:
         python3 -m pylint abdicate
       if:
         matrix.python != '3.3' &&
-        matrix.python != '3.4'
+        matrix.python != '3.4' &&
+        matrix.python != '3.11-dev'
     - name: check README syntax
       run: |
         python3 -m pip install restructuredtext-lint pygments
