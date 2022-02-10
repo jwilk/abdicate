@@ -52,7 +52,7 @@ jobs:
       run: |
         pyflakes=pyflakes
         if [[ ${{matrix.python}} = 3.3 ]]; then pyflakes+='<2'; fi
-        pip install $pyflakes
+        python3 -m pip install $pyflakes
         python3 -m pyflakes abdicate
     - name: run pylint
       run: |
