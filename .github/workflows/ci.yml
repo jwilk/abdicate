@@ -47,7 +47,7 @@ jobs:
     - name: run pydiatra
       run: |
         python3 -m pip install pydiatra
-        python3 -m pydiatra abdicate
+        python3 -m pydiatra -v abdicate
     - name: run pyflakes
       run: |
         pyflakes=pyflakes
