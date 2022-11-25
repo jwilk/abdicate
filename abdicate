@@ -154,7 +154,7 @@ def main():
             img.flush()
             show_image(img.name, options=options)
             captcha = input('captcha: ')
-            captcha = ' '.join(captcha.split())
+            captcha = str.join(' ', captcha.split())
         if not captcha:
             continue
         response = ua.post('/', data=dict(
