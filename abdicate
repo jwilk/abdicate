@@ -103,9 +103,19 @@ class UserAgent():
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0'
     }
+    debug_level = 0
 
     def __init__(self, base_url):
         self.base_url = base_url
+
+    def _build_opener(self):
+        # TODO: Get rid of this function once
+        # <https://github.com/python/cpython/issues/99352> is fixed.
+        handlers = [
+            Handler(debuglevel=self.debug_level)
+            for Handler in [urllib.request.HTTPHandler, urllib.request.HTTPSHandler]
+        ]
+        return urllib.request.build_opener(*handlers)
 
     def _request(self, url, *, method, data=None):
         if isinstance(url, bytes):
@@ -121,7 +131,8 @@ class UserAgent():
             data=data,
             headers=self.headers,
         )
-        with urllib.request.urlopen(request) as fp:
+        opener = self._build_opener()
+        with opener.open(request) as fp:
             return fp.read()
 
     def get(self, url):
@@ -135,9 +146,9 @@ def main():
     ap.add_argument('--debug', action='store_true', help='enable HTTP debugging')
     ap.add_argument('--copy-to', metavar='DIR', help='copy solved captchas to DIR')
     options = ap.parse_args()
-    if options.debug:
-        http.client.HTTPConnection.debuglevel = 1
     ua = UserAgent(base_url='http://bdi.free.aero2.net.pl:8080/')
+    if options.debug:
+        ua.debug_level = 1
     captcha = None
     while True:
         response = ua.post('/', data=dict(viewForm='true'))
