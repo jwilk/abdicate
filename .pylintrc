@@ -15,7 +15,7 @@ score = no
 msg-template = {path}:{line}: {C}: {symbol} [{obj}] {msg}
 
 [FORMAT]
-max-line-length = 100
+max-line-length = 120
 expected-line-ending-format = LF
 
 # vim:ft=dosini ts=4 sts=4 sw=4 et
