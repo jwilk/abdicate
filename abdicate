@@ -40,7 +40,8 @@ else:
 
 try:
     import aalib
-    from PIL import Image, ImageOps
+    import PIL.Image
+    import PIL.ImageOps
 except ImportError:
     aalib = None
 
@@ -69,9 +70,9 @@ def show_image_aalib(path, *, options):  # pylint: disable=unused-argument
         width=twidth,
         height=(theight - 4)
     )
-    image = Image.open(path)
+    image = PIL.Image.open(path)
     image = image.convert('L')
-    image = ImageOps.invert(image)
+    image = PIL.ImageOps.invert(image)
     bbox = image.getbbox()
     image = image.crop(bbox)
     image = image.resize(screen.virtual_size)
