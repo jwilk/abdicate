@@ -7,12 +7,8 @@ jobs:
     strategy:
       matrix:
         include:
-        - python: '3.3'
-          os: ubuntu-18.04
-        - python: '3.4'
-          os: ubuntu-18.04
         - python: '3.5'
-          os: ubuntu-18.04
+          os: ubuntu-20.04
         - python: '3.6'
           os: ubuntu-20.04
         - python: '3.7'
@@ -44,9 +40,7 @@ jobs:
         python3 -m pip install python-aalib
     - name: install Pillow
       run: |
-        pillow=pillow
-        if [[ ${{matrix.python}} = 3.3 ]]; then pillow+='<6'; fi
-        python3 -m pip install $pillow
+        python3 -m pip install pillow
     - name: smoke test
       run: |
         ./abdicate --help
@@ -56,17 +50,12 @@ jobs:
         python3 -m pydiatra -v abdicate
     - name: run pyflakes
       run: |
-        pyflakes=pyflakes
-        if [[ ${{matrix.python}} = 3.3 ]]; then pyflakes+='<2'; fi
-        python3 -m pip install $pyflakes
+        python3 -m pip install pyflakes
         python3 -m pyflakes abdicate
     - name: run pylint
       run: |
         python3 -m pip install pylint
         python3 -m pylint abdicate
-      if:
-        matrix.python != '3.3' &&
-        matrix.python != '3.4'
     - name: check README syntax
       run: |
         python3 -m pip install restructuredtext-lint pygments
