@@ -6,7 +6,7 @@ Overview
 
 Users of this service are required to solve a captcha every hour.
 
-**abdicate** is a command-line client for the Aero2 BDI captcha,
+**abdicate** is a terminal-based client for the Aero2 BDI captcha,
 which lets you solve it without using a web browser.
 
 Example
