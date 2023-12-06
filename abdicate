@@ -53,6 +53,8 @@ captcha_image_re = re.compile(
     br"<img src='([\w+.]+[?]PHPSESSID=(\w+))' id='captcha'>"
 )
 
+server_error_re = re.compile(r'>\s*Błąd serwisu[.]'.encode('UTF-8'))
+
 class ScrapingError(RuntimeError):
     pass
 
@@ -158,7 +160,12 @@ def main():
             break
         match = captcha_image_re.search(response)
         if match is None:
-            raise ScrapingError
+            match = server_error_re.search(response)
+            if match is None:
+                raise ScrapingError
+            else:
+                print(f'{ap.prog}: internal server error', file=sys.stderr)
+                sys.exit(1)
         url = match.group(1)
         session_id = match.group(2)
         img_response = ua.get(url)
