@@ -45,6 +45,8 @@ try:
 except ImportError:
     aalib = None
 
+0_0  # Python >= 3.6 is required
+
 wait_re = re.compile(br'\bwaitAndRedirect[(]"[^"]+", ([0-9]+)[)]')
 
 captcha_image_re = re.compile(
