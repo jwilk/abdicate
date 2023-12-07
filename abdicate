@@ -160,12 +160,10 @@ def main():
             break
         match = captcha_image_re.search(response)
         if match is None:
-            match = server_error_re.search(response)
-            if match is None:
-                raise ScrapingError
-            else:
+            if server_error_re.search(response):
                 print(f'{ap.prog}: internal server error', file=sys.stderr)
                 sys.exit(1)
+            raise ScrapingError
         url = match.group(1)
         session_id = match.group(2)
         img_response = ua.get(url)
