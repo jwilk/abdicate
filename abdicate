@@ -170,8 +170,14 @@ def main():
         with tempfile.NamedTemporaryFile(prefix='aero2.', suffix='.jpeg') as img:
             img.write(img_response)
             img.flush()
-            show_image(img.name, options=options)
-            captcha = input('captcha: ')
+            while True:
+                show_image(img.name, options=options)
+                try:
+                    captcha = input('captcha: ')
+                except EOFError:
+                    continue
+                else:
+                    break
             captcha = str.join(' ', captcha.split())
         if not captcha:
             continue
