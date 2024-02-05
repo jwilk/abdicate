@@ -147,7 +147,7 @@ class UserAgent():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--debug', action='store_true', help='enable HTTP debugging')
+    ap.add_argument('--debug', action='store_true', help=argparse.SUPPRESS)
     ap.add_argument('--copy-to', metavar='DIR', help='copy solved captchas to DIR')
     options = ap.parse_args()
     ua = UserAgent(base_url='http://bdi.free.aero2.net.pl:8080/')
