@@ -64,6 +64,14 @@ def show_image_see(path, *, options):
         cmdline[1:1] = ['--debug']
     ipc.check_call(cmdline)
 
+def clean_image(path):
+    image = PIL.Image.open(path)
+    image = image.convert('L')
+    image = PIL.ImageOps.invert(image)
+    bbox = image.getbbox()
+    image = image.crop(bbox)
+    return image
+
 def show_image_aalib(path, *, options):  # pylint: disable=unused-argument
     (twidth, theight) = shutil.get_terminal_size()
     if os.getenv('TERM') == 'linux':
@@ -74,11 +82,7 @@ def show_image_aalib(path, *, options):  # pylint: disable=unused-argument
         width=twidth,
         height=(theight - 4)
     )
-    image = PIL.Image.open(path)
-    image = image.convert('L')
-    image = PIL.ImageOps.invert(image)
-    bbox = image.getbbox()
-    image = image.crop(bbox)
+    image = clean_image(path)
     image = image.resize(screen.virtual_size)
     screen.put_image((0, 0), image)
     print(screen.render())
