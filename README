@@ -58,10 +58,12 @@ Prerequisites
 
 * Python ≥ 3.3
 
-* python-aalib_
+* chafa_ or python-aalib_
 
 * Pillow_
 
+.. _chafa:
+   https://hpjansson.org/chafa/
 .. _python-aalib:
    https://pypi.org/project/python-aalib/
 .. _Pillow:

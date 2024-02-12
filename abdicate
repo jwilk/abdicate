@@ -23,6 +23,7 @@
 import argparse
 import os
 import re
+import shlex
 import shutil
 import subprocess as ipc
 import sys
@@ -39,9 +40,13 @@ else:
     del readline
 
 try:
-    import aalib
     import PIL.Image
     import PIL.ImageOps
+except ImportError:
+    PIL = None
+
+try:
+    import aalib
 except ImportError:
     aalib = None
 
@@ -87,7 +92,19 @@ def show_image_aalib(path, *, options):  # pylint: disable=unused-argument
     screen.put_image((0, 0), image)
     print(screen.render())
 
-if aalib:
+def show_image_chafa(path, *, options):  # pylint: disable=unused-argument
+    image = clean_image(path)
+    with tempfile.NamedTemporaryFile(prefix='aero2.', suffix='.png') as imgfile:
+        image.save(imgfile.name)
+        cmdline = shlex.split('chafa --margin-bottom 4 --stretch')
+        cmdline += [imgfile.name]
+        if options.debug:
+            print('$', *(shlex.quote(arg) for arg in cmdline))
+        ipc.check_call(cmdline)
+
+if PIL and shutil.which('chafa'):
+    show_image = show_image_chafa
+elif PIL and aalib:
     show_image = show_image_aalib
 else:
     show_image = show_image_see
