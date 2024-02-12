@@ -167,6 +167,7 @@ class UserAgent():
     def post(self, url, *, data):
         return self._request(url, method='POST', data=data)
 
+# pylint: disable=too-many-statements,too-many-branches
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--debug', action='store_true', help=argparse.SUPPRESS)
