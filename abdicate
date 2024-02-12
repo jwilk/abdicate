@@ -97,6 +97,7 @@ def show_image_chafa(path, *, options):  # pylint: disable=unused-argument
     with tempfile.NamedTemporaryFile(prefix='aero2.', suffix='.png') as imgfile:
         image.save(imgfile.name)
         cmdline = shlex.split('chafa --margin-bottom 4 --stretch')
+        cmdline += options.chafa_opts
         cmdline += [imgfile.name]
         if options.debug:
             print('$', *(shlex.quote(arg) for arg in cmdline))
@@ -170,8 +171,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--debug', action='store_true', help=argparse.SUPPRESS)
     ap.add_argument('--test-image', metavar='FILE', help=argparse.SUPPRESS)
+    ap.add_argument('--chafa-opts', metavar='OPTS', default='', help='chafa(1) options')
     ap.add_argument('--copy-to', metavar='DIR', help='copy solved captchas to DIR')
     options = ap.parse_args()
+    try:
+        options.chafa_opts = shlex.split(options.chafa_opts)
+    except ValueError as exc:
+        ap.error(f'argument --chafa-opts: {exc}')
     if options.test_image is not None:
         show_image(options.test_image, options=options)
         return
