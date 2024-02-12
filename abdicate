@@ -148,8 +148,12 @@ class UserAgent():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--debug', action='store_true', help=argparse.SUPPRESS)
+    ap.add_argument('--test-image', metavar='FILE', help=argparse.SUPPRESS)
     ap.add_argument('--copy-to', metavar='DIR', help='copy solved captchas to DIR')
     options = ap.parse_args()
+    if options.test_image is not None:
+        show_image(options.test_image, options=options)
+        return
     ua = UserAgent(base_url='http://bdi.free.aero2.net.pl:8080/')
     if options.debug:
         ua.debug_level = 1
