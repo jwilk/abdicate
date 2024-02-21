@@ -63,10 +63,11 @@ server_error_re = re.compile(r'>\s*Błąd serwisu[.]'.encode('UTF-8'))
 class ScrapingError(RuntimeError):
     pass
 
-def show_image_see(path, *, options):
-    cmdline = ['see', path]
+def show_image_mailcap(path, *, options):
+    cmdline = shlex.split('run-mailcap --action=view')
     if options.debug:
-        cmdline[1:1] = ['--debug']
+        cmdline += ['--debug']
+    cmdline += [path]
     ipc.check_call(cmdline)
 
 def clean_image(path):
@@ -108,7 +109,7 @@ if PIL and shutil.which('chafa'):
 elif PIL and aalib:
     show_image = show_image_aalib
 else:
-    show_image = show_image_see
+    show_image = show_image_mailcap
 
 def wait(response):
     match = wait_re.search(response)
