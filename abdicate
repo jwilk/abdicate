@@ -78,7 +78,8 @@ def clean_image(path):
     image = image.crop(bbox)
     return image
 
-def show_image_aalib(path, *, options):  # pylint: disable=unused-argument
+def show_image_aalib(path, *, options):
+    del options
     (twidth, theight) = shutil.get_terminal_size()
     if os.getenv('TERM') == 'linux':
         screen = aalib.LinuxScreen
