@@ -94,7 +94,7 @@ def show_image_aalib(path, *, options):
     screen.put_image((0, 0), image)
     print(screen.render())
 
-def show_image_chafa(path, *, options):  # pylint: disable=unused-argument
+def show_image_chafa(path, *, options):
     image = clean_image(path)
     with tempfile.NamedTemporaryFile(prefix='aero2.', suffix='.png') as imgfile:
         image.save(imgfile.name)
